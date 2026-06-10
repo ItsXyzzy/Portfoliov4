@@ -6,14 +6,14 @@
 <title>Craig Dowdall — Developer & Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Clash+Grotesk:wght@400;600;700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --paper: #F0EDE6;
     --ink: #111111;
-    --ink-mid: #444440; /* Slightly darkened for premium accessibility/contrast */
+    --ink-mid: #555550;
     --ink-faint: #9A9990;
     --rust: #C8572E;
     --sage: #637A60;
@@ -35,7 +35,7 @@
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-weight: 300;
     line-height: 1.6;
     overflow-x: hidden;
@@ -52,15 +52,33 @@
     justify-content: space-between;
     padding: 1.5rem 3rem;
     transition: padding var(--transition-speed) ease;
+    mix-blend-mode: difference;
   }
 
   .nav-logo {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: 1.1rem;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.02em;
     text-decoration: none;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1), color var(--transition-speed) ease;
     z-index: 101;
+    color: #ffffff;
+  }
+
+  .nav-logo.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  nav.menu-open .nav-logo {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .nav-actions {
@@ -70,12 +88,10 @@
     z-index: 101;
   }
 
-  /* ---- THEME TOGGLE ---- */
   .theme-toggle-btn {
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--ink);
     width: 32px;
     height: 32px;
     display: flex;
@@ -84,6 +100,7 @@
     padding: 0;
     position: relative;
     transition: color var(--transition-speed) ease;
+    color: #ffffff;
   }
 
   .theme-toggle-btn svg {
@@ -104,22 +121,21 @@
   [data-theme="dark"] .theme-toggle-btn .sun-icon { opacity: 0; transform: rotate(90deg) scale(0.5); }
   [data-theme="dark"] .theme-toggle-btn .moon-icon { opacity: 1; transform: rotate(0deg) scale(1); }
 
-  /* ---- MENU BUTTON ---- */
   .nav-menu-btn {
     background: none;
     border: none;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink);
     display: flex;
     align-items: center;
     gap: 0.6rem;
     padding: 0;
     transition: color var(--transition-speed) ease;
+    color: #ffffff;
   }
 
   .menu-lines {
@@ -132,13 +148,29 @@
   .menu-lines span {
     display: block;
     height: 1px;
-    background: var(--ink);
+    background: #ffffff;
     transition: transform 0.4s cubic-bezier(0.76,0,0.24,1), opacity 0.3s ease, width 0.4s cubic-bezier(0.76,0,0.24,1), background var(--transition-speed) ease;
   }
 
   .menu-lines span:nth-child(2) { width: 14px; }
 
-  /* menu-open colours handled in inversion block below */
+  nav.menu-open {
+    mix-blend-mode: normal;
+  }
+
+  nav.menu-open .nav-logo,
+  nav.menu-open .nav-menu-btn,
+  nav.menu-open .theme-toggle-btn {
+    color: #F0EDE6 !important;
+  }
+
+  nav.menu-open .menu-lines span {
+    background: #F0EDE6 !important;
+  }
+
+  nav.menu-open .theme-toggle-btn svg {
+    stroke: #F0EDE6;
+  }
 
   nav.menu-open .menu-lines span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
   nav.menu-open .menu-lines span:nth-child(2) { opacity: 0; transform: scaleX(0); }
@@ -149,7 +181,7 @@
     position: fixed;
     inset: 0;
     z-index: 99;
-    background: #111111; /* Locked beautiful ink dark mode for the overlay shelf */
+    background: #111111;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -184,7 +216,7 @@
     padding: 1.8rem 0;
     text-decoration: none;
     color: #F0EDE6;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: clamp(2.5rem, 6vw, 5rem);
     font-weight: 700;
     line-height: 1;
@@ -205,7 +237,7 @@
 
   .overlay-arrow {
     font-size: 1.5rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-weight: 300;
     opacity: 0.4;
   }
@@ -252,9 +284,9 @@
   }
 
   .hero-headline {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: clamp(3.5rem, 9vw, 9rem);
-    font-weight: 900;
+    font-weight: 700;
     line-height: 0.9;
     letter-spacing: -0.02em;
     margin-bottom: 4rem;
@@ -391,7 +423,7 @@
   }
 
   .about-headline {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: clamp(2rem, 3.5vw, 3.2rem);
     font-weight: 700;
     line-height: 1.15;
@@ -445,9 +477,9 @@
   }
 
   .projects-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 900;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1;
   }
@@ -473,6 +505,7 @@
   .projects-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
   }
 
   .project-card {
@@ -481,27 +514,20 @@
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     background: var(--paper);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
   }
 
-  /* Adaptive center border calculations ignoring .featured child anomalies */
-  .project-card:not(.featured):nth-of-type(2n+1) { border-right: 1px solid var(--border); }
+  .project-card:nth-child(odd) { border-right: 1px solid var(--border); }
 
   .project-card.featured {
     grid-column: 1 / -1;
-    border-right: none !important;
+    border-right: none;
   }
 
   .project-inner {
     padding: 3rem;
     position: relative;
     z-index: 2;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     transition: transform 0.6s cubic-bezier(0.76,0,0.24,1);
   }
 
@@ -517,7 +543,7 @@
   }
 
   .project-name {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: clamp(1.8rem, 3vw, 2.8rem);
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -537,22 +563,13 @@
     color: var(--ink-mid);
     line-height: 1.7;
     max-width: 500px;
-    margin-bottom: 2.5rem;
-  }
-
-  .project-bottom-wrapper {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    max-width: 80%;
   }
 
   .tag {
@@ -573,6 +590,9 @@
   }
 
   .project-link {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
     width: 48px;
     height: 48px;
     border: 1px solid var(--border);
@@ -598,16 +618,16 @@
     position: absolute;
     bottom: -1rem;
     right: -0.5rem;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Clash Grotesk', sans-serif;
     font-size: 12rem;
-    font-weight: 900;
+    font-weight: 700;
     color: rgba(17,17,17,0.04);
     line-height: 1;
     pointer-events: none;
     user-select: none;
     transition: transform 0.6s cubic-bezier(0.76,0,0.24,1), color var(--transition-speed) ease;
   }
-  
+
   [data-theme="dark"] .project-bg-num {
     color: rgba(240,237,230,0.03);
   }
@@ -628,65 +648,262 @@
   .project-card.accent-rust:hover .project-name { color: #F0EDE6; }
   .project-card.accent-rust:hover .project-bg-num { color: rgba(240,237,230,0.12) !important; }
 
-  /* ---- CONTACT ---- */
+  /* ---- LIGHTBOX ---- */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(17, 17, 17, 0.0);
+    color: var(--paper);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    pointer-events: none;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.6s cubic-bezier(0.76, 0, 0.24, 1), background 0.5s ease;
+  }
+
+  .lightbox-overlay.open {
+    pointer-events: all;
+    clip-path: inset(0 0 0% 0);
+    background: rgba(17, 17, 17, 0.98);
+  }
+
+  .lightbox-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--paper);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    z-index: 202;
+    transition: color 0.2s;
+  }
+
+  .lightbox-close-btn:hover { color: var(--sand); }
+
+  .lightbox-close-btn span:first-child {
+    font-size: 1.2rem;
+    line-height: 1;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+  }
+
+  .lightbox-close-btn:hover span:first-child { transform: rotate(90deg); }
+
+  .lightbox-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 80svh;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.2s;
+  }
+
+  .lightbox-overlay.open .lightbox-container {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .lightbox-media {
+    background: rgba(240,237,230,0.04);
+    border: 1px solid rgba(240,237,230,0.1);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lightbox-media::before {
+    content: 'Project Visual Layout';
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.2);
+  }
+
+  .lightbox-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .lightbox-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 1.5rem;
+  }
+
+  .lightbox-title {
+    font-family: 'Clash Grotesk', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .lightbox-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(240,237,230,0.7);
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+  }
+
+  .lightbox-tags-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.4);
+    margin-bottom: 0.8rem;
+  }
+
+  .lightbox-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .lightbox-tags .tag {
+    color: var(--paper);
+    border-color: rgba(240,237,230,0.2);
+  }
+
+  /* ---- CONTACT & FORM ---- */
   .contact {
     padding: 6rem 3rem;
     border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
     transition: border-color var(--transition-speed) ease;
   }
 
-  .contact-top {
+  .contact-left {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 5rem;
-    flex-wrap: wrap;
-    gap: 2rem;
   }
 
   .contact-headline {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 7vw, 7rem);
-    font-weight: 900;
+    font-family: 'Clash Grotesk', sans-serif;
+    font-size: clamp(3rem, 5.5vw, 6rem);
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 0.95;
-    max-width: 700px;
+    margin-bottom: 3rem;
   }
 
   .contact-headline em { font-style: italic; color: var(--sage); }
 
-  .contact-right {
-    max-width: 280px;
-  }
-
-  .contact-right p {
-    font-size: 0.875rem;
+  .contact-details p {
+    font-size: 0.95rem;
     color: var(--ink-mid);
     line-height: 1.7;
-    margin-bottom: 2rem;
+    max-width: 380px;
+    margin-bottom: 3rem;
   }
 
-  .contact-btn {
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .form-group {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group:focus-within {
+    border-color: var(--ink);
+  }
+
+  .form-control {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    padding: 0.8rem 0;
+  }
+
+  textarea.form-control {
+    resize: none;
+    height: 90px;
+  }
+
+  .form-label {
+    position: absolute;
+    left: 0;
+    top: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), font-size 0.3s ease, color 0.3s ease;
+    transform-origin: left top;
+  }
+
+  .form-group:focus-within .form-label,
+  .form-control:not(:placeholder-shown) + .form-label {
+    transform: translateY(-1.4rem) scale(0.8);
+    color: var(--rust);
+  }
+
+  .form-submit-btn {
+    align-self: flex-start;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 1.2rem 2.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     display: inline-flex;
     align-items: center;
     gap: 0.8rem;
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-    padding: 1rem 1.8rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 500;
-    transition: background var(--transition-speed) ease, color var(--transition-speed) ease, gap 0.3s;
+    transition: background 0.3s, gap 0.3s;
+    margin-top: 1rem;
   }
 
-  .contact-btn:hover { background: var(--rust); gap: 1.2rem; color: #F0EDE6; }
+  .form-submit-btn:hover {
+    background: var(--rust);
+    gap: 1.2rem;
+  }
 
-  .contact-links {
+  .contact-links-wrapper {
+    grid-column: 1 / -1;
     display: flex;
     gap: 2.5rem;
     padding-top: 3rem;
@@ -708,7 +925,6 @@
   }
 
   .contact-link:hover { color: var(--ink); }
-
   .contact-link::after {
     content: '↗';
     font-size: 0.8em;
@@ -769,300 +985,12 @@
     100% { left: 100%; }
   }
 
-  /* ---- NAV LOGO SCROLL REVEAL ---- */
-  .nav-logo {
-    opacity: 0;
-    transform: translateY(-6px);
-    pointer-events: none;
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1), color var(--transition-speed) ease;
-  }
-
-  .nav-logo.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  /* When menu is open, always show logo */
-  nav.menu-open .nav-logo {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  /* ---- NAV COLOUR INVERSION (mix-blend-mode) ---- */
-  nav {
-    mix-blend-mode: difference;
-  }
-
-  /* Elements inside nav that should invert */
-  .nav-logo,
-  .nav-menu-btn,
-  .theme-toggle-btn {
-    color: #ffffff;
-  }
-
-  .menu-lines span {
-    background: #ffffff;
-  }
-
-  .theme-toggle-btn svg {
-    stroke: #ffffff;
-  }
-
-  /* When menu is open, nav sits above overlay so needs to be light explicitly */
-  nav.menu-open {
-    mix-blend-mode: normal;
-  }
-
-  nav.menu-open .nav-logo,
-  nav.menu-open .nav-menu-btn,
-  nav.menu-open .theme-toggle-btn {
-    color: #F0EDE6 !important;
-  }
-
-  nav.menu-open .menu-lines span {
-    background: #F0EDE6 !important;
-  }
-
-  nav.menu-open .theme-toggle-btn svg {
-    stroke: #F0EDE6;
-  }
-
-  /* ---- LIGHTBOX ---- */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgba(17,17,17,0.0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    transition: background 0.5s ease;
-  }
-
-  .lightbox.open {
-    pointer-events: all;
-    background: rgba(17,17,17,0.92);
-  }
-
-  .lightbox-panel {
-    position: relative;
-    width: min(90vw, 960px);
-    background: var(--paper);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    opacity: 0;
-    transform: translateY(32px) scale(0.97);
-    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
-    max-height: 90vh;
-    overflow: hidden;
-  }
-
-  .lightbox.open .lightbox-panel {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  .lightbox-visual {
-    background: #1a1a1a;
-    min-height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .lightbox-visual-inner {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 6rem;
-    font-weight: 900;
-    color: rgba(255,255,255,0.06);
-    letter-spacing: -0.04em;
-    line-height: 1;
-    padding: 2rem;
-    text-align: center;
-    user-select: none;
-  }
-
-  /* Per-project visual accent colours */
-  .lightbox-visual.accent-pam { background: #0e1a0f; }
-  .lightbox-visual.accent-pawswick { background: #1a1209; }
-  .lightbox-visual.accent-kinetic { background: #1a0a0a; }
-  .lightbox-visual.accent-photo { background: #0d0d0d; }
-  .lightbox-visual.accent-lzrs { background: #091520; }
-
-  .lightbox-visual-tag {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    font-family: 'Inter', sans-serif;
-  }
-
-  .lightbox-content {
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    max-height: 90vh;
-  }
-
-  .lightbox-num {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 1.5rem;
-  }
-
-  .lightbox-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    margin-bottom: 1.2rem;
-  }
-
-  .lightbox-desc {
-    font-size: 0.875rem;
-    color: var(--ink-mid);
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    flex-grow: 1;
-  }
-
-  .lightbox-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 2rem;
-  }
-
-  .lightbox-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.7rem;
-    border: 1px solid var(--border);
-    color: var(--ink-mid);
-  }
-
-  .lightbox-actions {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-  }
-
-  .lightbox-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.4rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 500;
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    border: none;
-    transition: background 0.25s, color 0.25s, gap 0.25s;
-  }
-
-  .lightbox-btn.primary {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .lightbox-btn.primary:hover {
-    background: var(--rust);
-    gap: 0.8rem;
-  }
-
-  .lightbox-btn.secondary {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--border);
-  }
-
-  .lightbox-btn.secondary:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.2rem;
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(240,237,230,0.2);
-    border-radius: 50%;
-    background: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(240,237,230,0.6);
-    font-size: 1rem;
-    transition: background 0.2s, color 0.2s;
-    z-index: 10;
-  }
-
-  .lightbox-close:hover {
-    background: rgba(240,237,230,0.1);
-    color: #F0EDE6;
-  }
-
-  .lightbox-nav {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 1.5rem;
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .lightbox-nav-btn {
-    width: 32px;
-    height: 32px;
-    border: 1px solid rgba(240,237,230,0.2);
-    background: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(240,237,230,0.5);
-    font-size: 0.875rem;
-    transition: background 0.2s, color 0.2s;
-    border-radius: 50%;
-  }
-
-  .lightbox-nav-btn:hover {
-    background: rgba(240,237,230,0.1);
-    color: #F0EDE6;
-  }
-
-  /* Make project cards clickable cues */
-  .project-card { cursor: pointer; }
-
   /* ---- REDUCED MOTION ---- */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
 
-  /* ---- MOBILE FIXES ---- */
+  /* ---- MOBILE ---- */
   @media (max-width: 768px) {
     nav { padding: 1.2rem 1.5rem; }
 
@@ -1074,50 +1002,26 @@
 
     .projects-header { padding: 2rem 1.5rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .projects-grid { grid-template-columns: 1fr; }
-    .project-card:not(.featured):nth-of-type(2n+1) { border-right: none; }
-    
+    .project-card:nth-child(odd) { border-right: none; }
     .project-inner { padding: 2.5rem 1.5rem; }
     .project-bg-num { font-size: 7rem; }
-    
-    .project-bottom-wrapper {
-      position: relative;
-      align-items: flex-end;
-      width: 100%;
-    }
-    .project-tags { max-width: 75%; }
 
-    .contact { padding: 4rem 1.5rem; }
+    .lightbox-overlay { padding: 1.5rem; }
+    .lightbox-container { grid-template-columns: 1fr; height: auto; gap: 2rem; }
+    .lightbox-media { height: 220px; }
+
+    .contact { padding: 4rem 1.5rem; grid-template-columns: 1fr; gap: 3rem; }
     .contact-top { flex-direction: column; margin-bottom: 3.5rem; }
     .contact-links { gap: 1.5rem 2rem; justify-content: flex-start; }
 
     .menu-overlay { padding: 1.5rem; }
 
-    .lightbox-panel {
-      grid-template-columns: 1fr;
-      width: 95vw;
-      max-height: 85vh;
-      overflow-y: auto;
-    }
-
-    .lightbox-visual {
-      min-height: 200px;
-    }
-
-    .lightbox-content {
-      padding: 2rem 1.5rem;
-    }
-
-    .lightbox-close {
-      top: 0.8rem;
-      right: 0.8rem;
-    }
-
-    footer { 
-      padding: 1.5rem 1.5rem; 
-      flex-direction: column; 
-      gap: 0.5rem; 
-      align-items: center; 
-      text-align: center; 
+    footer {
+      padding: 1.5rem 1.5rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      text-align: center;
     }
   }
 </style>
@@ -1126,7 +1030,7 @@
 
 <nav id="main-nav">
   <a href="#" class="nav-logo">Craig Dowdall</a>
-  
+
   <div class="nav-actions">
     <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle visual theme">
       <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
@@ -1245,33 +1149,31 @@
           a clean data-dense layout with live integrations — one of my most complete
           full-stack projects to date.
         </p>
-        <div class="project-bottom-wrapper">
-          <div class="project-tags">
-            <span class="tag">HTML / CSS</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">AI Integration</span>
-          </div>
-          <a href="#" class="project-link" aria-label="View PAM AI project">↗</a>
+        <div class="project-tags">
+          <span class="tag">HTML / CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">AI Integration</span>
         </div>
       </div>
+      <a href="#" class="project-link" aria-label="View PAM AI project">↗</a>
       <div class="project-bg-num" aria-hidden="true">01</div>
     </article>
 
     <article class="project-card reveal reveal-delay-1" data-project="pawswick">
+      <div class="project-inner">
+        <span class="project-num">02 — Astro / Web</span>
         <h3 class="project-name">Pawswick Rescue</h3>
         <p class="project-desc">
           A fictional cat rescue charity site built in Astro. Component-driven
           architecture with a warm editorial aesthetic.
         </p>
-        <div class="project-bottom-wrapper">
-          <div class="project-tags">
-            <span class="tag">Astro</span>
-            <span class="tag">CSS</span>
-            <span class="tag">Design</span>
-          </div>
-          <a href="#" class="project-link" aria-label="View Pawswick Rescue project">↗</a>
+        <div class="project-tags">
+          <span class="tag">Astro</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Design</span>
         </div>
       </div>
+      <a href="#" class="project-link" aria-label="View Pawswick Rescue project">↗</a>
       <div class="project-bg-num" aria-hidden="true">02</div>
     </article>
 
@@ -1284,15 +1186,13 @@
           Bold typographic system, expressive layout, designed to feel like
           it could actually exist on a high street.
         </p>
-        <div class="project-bottom-wrapper">
-          <div class="project-tags">
-            <span class="tag">HTML / CSS</span>
-            <span class="tag">Branding</span>
-            <span class="tag">Speculative</span>
-          </div>
-          <a href="#" class="project-link" aria-label="View Kinetic Print Works project">↗</a>
+        <div class="project-tags">
+          <span class="tag">HTML / CSS</span>
+          <span class="tag">Branding</span>
+          <span class="tag">Speculative</span>
         </div>
       </div>
+      <a href="#" class="project-link" aria-label="View Kinetic Print Works project">↗</a>
       <div class="project-bg-num" aria-hidden="true">03</div>
     </article>
 
@@ -1304,179 +1204,146 @@
           A personal photography showcase built independently in Astro.
           Full-bleed image layouts, lightbox interactions, clean gallery flow.
         </p>
-        <div class="project-bottom-wrapper">
-          <div class="project-tags">
-            <span class="tag">Astro</span>
-            <span class="tag">Photography</span>
-            <span class="tag">Gallery</span>
-          </div>
-          <a href="#" class="project-link" aria-label="View Photography Portfolio project">↗</a>
+        <div class="project-tags">
+          <span class="tag">Astro</span>
+          <span class="tag">Photography</span>
+          <span class="tag">Gallery</span>
         </div>
       </div>
+      <a href="#" class="project-link" aria-label="View Photography Portfolio project">↗</a>
       <div class="project-bg-num" aria-hidden="true">04</div>
     </article>
 
     <article class="project-card reveal reveal-delay-2" data-project="lzrs">
+      <div class="project-inner">
+        <span class="project-num">05 — App / Weather</span>
         <h3 class="project-name">LZRS Weather</h3>
         <p class="project-desc">
           A minimal weather app deployed on GitHub Pages. OpenMeteo API,
           clean data display, with an Android version in the works.
         </p>
-        <div class="project-bottom-wrapper">
-          <div class="project-tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">OpenMeteo</span>
-            <span class="tag">Pages</span>
-          </div>
-          <a href="#" class="project-link" aria-label="View LZRS Weather project">↗</a>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">OpenMeteo</span>
+          <span class="tag">GitHub Pages</span>
         </div>
       </div>
+      <a href="#" class="project-link" aria-label="View LZRS Weather project">↗</a>
       <div class="project-bg-num" aria-hidden="true">05</div>
     </article>
 
   </div>
 </section>
 
+<div class="lightbox-overlay" id="project-lightbox">
+  <button class="lightbox-close-btn" id="lightbox-close" aria-label="Close project modal">
+    <span>✕</span><span>Close</span>
+  </button>
+  <div class="lightbox-container">
+    <div class="lightbox-media"></div>
+    <div class="lightbox-content">
+      <span class="lightbox-num" id="lb-num">01 — Type</span>
+      <h3 class="lightbox-title" id="lb-title">Project Title</h3>
+      <p class="lightbox-desc" id="lb-desc">Detailed project description will dynamically render here inside your viewport panel area.</p>
+      <div class="lightbox-tags-wrapper">
+        <p class="lightbox-tags-label">Technologies</p>
+        <div class="lightbox-tags" id="lb-tags"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="contact" id="contact">
-  <div class="contact-top reveal">
+  <div class="contact-left reveal">
     <h2 class="contact-headline">
       Let's make<br>something<br><em>good.</em>
     </h2>
-    <div class="contact-right">
+    <div class="contact-details">
       <p>
         Open to freelance work, collaborations, and interesting projects.
         If you have something worth building, I want to hear about it.
       </p>
-      <a href="mailto:craig@example.com" class="contact-btn">
-        Get in touch →
-      </a>
     </div>
   </div>
-  <div class="contact-links reveal reveal-delay-1">
+
+  <form class="contact-form reveal reveal-delay-1" action="#" method="POST" id="portfolio-form">
+    <div class="form-group">
+      <input type="text" id="form-name" class="form-control" placeholder=" " required autocomplete="name">
+      <label for="form-name" class="form-label">Name</label>
+    </div>
+    <div class="form-group">
+      <input type="email" id="form-email" class="form-control" placeholder=" " required autocomplete="email">
+      <label for="form-email" class="form-label">Email Address</label>
+    </div>
+    <div class="form-group">
+      <textarea id="form-message" class="form-control" placeholder=" " required></textarea>
+      <label for="form-message" class="form-label">Project Details</label>
+    </div>
+    <button type="submit" class="form-submit-btn">
+      Send Message →
+    </button>
+  </form>
+
+  <div class="contact-links-wrapper reveal">
     <a href="https://github.com/ItsXyzzy" target="_blank" class="contact-link">GitHub</a>
     <a href="https://twitter.com/craig_dowdall" target="_blank" class="contact-link">Twitter</a>
     <a href="https://cdow.bsky.social" target="_blank" class="contact-link">Bluesky</a>
   </div>
 </section>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project details">
-  <div class="lightbox-panel" id="lightbox-panel">
-    <div class="lightbox-visual" id="lightbox-visual">
-      <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
-      <div class="lightbox-visual-inner" id="lightbox-visual-text"></div>
-      <span class="lightbox-visual-tag" id="lightbox-visual-tag"></span>
-      <div class="lightbox-nav">
-        <button class="lightbox-nav-btn" id="lightbox-prev" aria-label="Previous project">←</button>
-        <button class="lightbox-nav-btn" id="lightbox-next" aria-label="Next project">→</button>
-      </div>
-    </div>
-    <div class="lightbox-content">
-      <p class="lightbox-num" id="lightbox-num"></p>
-      <h2 class="lightbox-title" id="lightbox-title"></h2>
-      <p class="lightbox-desc" id="lightbox-desc"></p>
-      <div class="lightbox-tags" id="lightbox-tags"></div>
-      <div class="lightbox-actions" id="lightbox-actions"></div>
-    </div>
-  </div>
-</div>
-
 <footer>
   <span>© 2026 Craig Dowdall</span>
-  <span>Built by hand — Ireland</span>
+  <span>Built by hand & love in Dublin, Ireland ♡</span>
 </footer>
 
 <script>
-  // ---- PROJECT DATA ----
-  const projects = [
-    {
-      id: 'pam',
+  const projectData = {
+    pam: {
       num: '01 — AI Dashboard',
       title: 'PAM AI',
       desc: 'A personal AI assistant dashboard with a spatial interface. Built around a clean, data-dense layout with live integrations — real-time data, modular panels, and a design system built entirely from scratch. One of my most complete full-stack projects to date.',
       tags: ['HTML / CSS', 'JavaScript', 'AI Integration', 'Dashboard'],
-      visual: 'accent-pam',
-      visualText: 'PAM',
-      visualTag: 'AI Dashboard',
       link: '#',
       github: '#'
     },
-    {
-      id: 'pawswick',
+    pawswick: {
       num: '02 — Astro / Web',
       title: 'Pawswick Rescue',
       desc: 'A fictional cat rescue charity site built in Astro. Component-driven architecture, warm editorial aesthetic, and a content-first layout that actually makes you want to adopt a cat. Built as a speculative project to explore Astro\'s component model.',
       tags: ['Astro', 'CSS', 'Design', 'Charity'],
-      visual: 'accent-pawswick',
-      visualText: 'PW',
-      visualTag: 'Astro / Web',
       link: '#',
       github: '#'
     },
-    {
-      id: 'kinetic',
+    kinetic: {
       num: '03 — Print / Design',
       title: 'Kinetic Print Works',
       desc: 'A speculative brand identity and site for a fictional print studio. Bold typographic system, expressive layout, and a colour system that feels tactile. Designed to feel like it could actually exist on a high street — every detail treated as if a real client signed off on it.',
       tags: ['HTML / CSS', 'Branding', 'Typography', 'Speculative'],
-      visual: 'accent-kinetic',
-      visualText: 'KPW',
-      visualTag: 'Print / Design',
-      link: '#',
-      github: '#'
+      link: 'https://itsxyzzy.github.io/Kinetic-Demo/',
+      github: 'https://github.com/ItsXyzzy/Kinetic-Demo'
     },
-    {
-      id: 'photo',
+    photo: {
       num: '04 — Astro / Photography',
       title: 'Photography Portfolio',
       desc: 'A personal photography showcase built independently in Astro. Full-bleed image layouts, lightbox interactions, and a clean gallery flow that keeps the photos front and centre. Shot on Canon 5D mk.II and Fuji X100VI.',
       tags: ['Astro', 'Photography', 'Gallery', 'Lightbox'],
-      visual: 'accent-photo',
-      visualText: '35mm',
-      visualTag: 'Photography',
       link: '#',
       github: '#'
     },
-    {
-      id: 'lzrs',
+    lzrs: {
       num: '05 — App / Weather',
       title: 'LZRS Weather',
       desc: 'A minimal weather app deployed on GitHub Pages using the OpenMeteo API. Clean data display, location-aware, fast. An Android version is in the works — same logic, native UI, proper offline caching.',
       tags: ['JavaScript', 'OpenMeteo API', 'GitHub Pages', 'Android (WIP)'],
-      visual: 'accent-lzrs',
-      visualText: 'LZRS',
-      visualTag: 'App / Weather',
       link: '#',
       github: '#'
     }
-  ];
-
-  const projectOrder = ['pam', 'pawswick', 'kinetic', 'photo', 'lzrs'];
-  let currentProjectIndex = 0;
-
-  // ---- ELEMENTS ----
-  const menuToggle = document.getElementById('menu-toggle');
-  const menuOverlay = document.getElementById('menu-overlay');
-  const mainNav = document.getElementById('main-nav');
-  const menuLabel = document.getElementById('menu-label');
-  const themeToggle = document.getElementById('theme-toggle');
-  const navLogo = document.querySelector('.nav-logo');
-  const heroSection = document.querySelector('.hero');
-
-  const lightbox = document.getElementById('lightbox');
-  const lightboxVisual = document.getElementById('lightbox-visual');
-  const lightboxVisualText = document.getElementById('lightbox-visual-text');
-  const lightboxVisualTag = document.getElementById('lightbox-visual-tag');
-  const lightboxNum = document.getElementById('lightbox-num');
-  const lightboxTitle = document.getElementById('lightbox-title');
-  const lightboxDesc = document.getElementById('lightbox-desc');
-  const lightboxTags = document.getElementById('lightbox-tags');
-  const lightboxActions = document.getElementById('lightbox-actions');
-  const lightboxClose = document.getElementById('lightbox-close');
-  const lightboxPrev = document.getElementById('lightbox-prev');
-  const lightboxNext = document.getElementById('lightbox-next');
+  };
 
   // ---- NAV LOGO SCROLL REVEAL ----
+  const heroSection = document.querySelector('.hero');
+  const navLogo = document.querySelector('.nav-logo');
+
   const heroObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -1490,6 +1357,12 @@
   heroObserver.observe(heroSection);
 
   // ---- MENU ----
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const mainNav = document.getElementById('main-nav');
+  const menuLabel = document.getElementById('menu-label');
+  const themeToggle = document.getElementById('theme-toggle');
+
   function openMenu() {
     menuOverlay.classList.add('open');
     mainNav.classList.add('menu-open');
@@ -1538,27 +1411,22 @@
   });
 
   // ---- LIGHTBOX ----
-  function populateLightbox(projectId) {
-    const p = projects.find(x => x.id === projectId);
-    if (!p) return;
-    currentProjectIndex = projectOrder.indexOf(projectId);
-
-    lightboxVisual.className = 'lightbox-visual ' + p.visual;
-    lightboxVisualText.textContent = p.visualText;
-    lightboxVisualTag.textContent = p.visualTag;
-    lightboxNum.textContent = p.num;
-    lightboxTitle.textContent = p.title;
-    lightboxDesc.textContent = p.desc;
-
-    lightboxTags.innerHTML = p.tags.map(t => `<span class="lightbox-tag">${t}</span>`).join('');
-    lightboxActions.innerHTML = `
-      <a href="${p.link}" class="lightbox-btn primary" target="_blank">View Live ↗</a>
-      <a href="${p.github}" class="lightbox-btn secondary" target="_blank">GitHub</a>
-    `;
-  }
+  const lightbox = document.getElementById('project-lightbox');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const lbNum = document.getElementById('lb-num');
+  const lbTitle = document.getElementById('lb-title');
+  const lbDesc = document.getElementById('lb-desc');
+  const lbTags = document.getElementById('lb-tags');
 
   function openLightbox(projectId) {
-    populateLightbox(projectId);
+    const p = projectData[projectId];
+    if (!p) return;
+
+    lbNum.textContent = p.num;
+    lbTitle.textContent = p.title;
+    lbDesc.textContent = p.desc;
+    lbTags.innerHTML = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -1568,32 +1436,15 @@
     document.body.style.overflow = '';
   }
 
-  function navigateLightbox(dir) {
-    currentProjectIndex = (currentProjectIndex + dir + projectOrder.length) % projectOrder.length;
-    // Animate out then in
-    const panel = document.getElementById('lightbox-panel');
-    panel.style.opacity = '0';
-    panel.style.transform = `translateY(${dir > 0 ? '16px' : '-16px'}) scale(0.98)`;
-    setTimeout(() => {
-      populateLightbox(projectOrder[currentProjectIndex]);
-      panel.style.transition = 'opacity 0.35s cubic-bezier(0.16,1,0.3,1), transform 0.35s cubic-bezier(0.16,1,0.3,1)';
-      panel.style.opacity = '1';
-      panel.style.transform = 'translateY(0) scale(1)';
-    }, 200);
-  }
-
   document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      if (e.target.closest('.project-link')) return; // let link handle itself
+      if (e.target.closest('.project-link')) return;
       const id = card.dataset.project;
       if (id) openLightbox(id);
     });
   });
 
   lightboxClose.addEventListener('click', closeLightbox);
-  lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
-  lightboxNext.addEventListener('click', () => navigateLightbox(1));
-
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
@@ -1601,8 +1452,6 @@
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') navigateLightbox(-1);
-    if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
   // ---- SCROLL REVEAL ----
