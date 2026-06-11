@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C8572E">
 <title>Craig Dowdall — Developer & Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -740,11 +741,57 @@
     color: rgba(240,237,230,0.2);
   }
 
+  /* Masonry Grid for multiple images */
+  .lightbox-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+
+  .lightbox-gallery.single {
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  .gallery-item {
+    background: rgba(240,237,230,0.08);
+    border: 1px solid rgba(240,237,230,0.15);
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: rgba(240,237,230,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-item:hover {
+    background: rgba(240,237,230,0.12);
+    border-color: rgba(240,237,230,0.25);
+    transform: scale(1.02);
+  }
+
   .lightbox-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
+  }
+
+  .lightbox-content-inner {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .lightbox-num {
@@ -783,11 +830,103 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-bottom: 2rem;
   }
 
   .lightbox-tags .tag {
     color: var(--paper);
     border-color: rgba(240,237,230,0.2);
+  }
+
+  /* ---- LIGHTBOX ACTIONS ---- */
+  .lightbox-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(240,237,230,0.1);
+    padding-top: 2rem;
+  }
+
+  .lightbox-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(240,237,230,0.08);
+    border: 1px solid rgba(240,237,230,0.2);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.3s, border-color 0.3s, color 0.3s, gap 0.3s;
+  }
+
+  .lightbox-action-btn:hover {
+    background: var(--sand);
+    border-color: var(--sand);
+    color: #111111;
+    gap: 0.8rem;
+  }
+
+  .lightbox-action-btn.primary {
+    background: var(--sand);
+    border-color: var(--sand);
+    color: #111111;
+  }
+
+  .lightbox-action-btn.primary:hover {
+    background: rgba(240,237,230,0.15);
+    border-color: rgba(240,237,230,0.3);
+    color: var(--paper);
+  }
+
+  /* ---- LIGHTBOX NAVIGATION ---- */
+  .lightbox-nav {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 210;
+  }
+
+  .lightbox-nav-btn {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(240,237,230,0.2);
+    background: rgba(240,237,230,0.05);
+    color: rgba(240,237,230,0.7);
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 0;
+  }
+
+  .lightbox-nav-btn:hover {
+    background: rgba(240,237,230,0.12);
+    border-color: rgba(240,237,230,0.4);
+    color: var(--paper);
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.4);
+    z-index: 210;
   }
 
   /* ---- CONTACT & FORM ---- */
@@ -1009,6 +1148,9 @@
     .lightbox-overlay { padding: 1.5rem; }
     .lightbox-container { grid-template-columns: 1fr; height: auto; gap: 2rem; }
     .lightbox-media { height: 220px; }
+    .lightbox-gallery { grid-template-columns: repeat(2, 1fr); }
+    .lightbox-nav { left: 1.5rem; bottom: 1.5rem; }
+    .lightbox-counter { right: 1.5rem; bottom: 1.5rem; }
 
     .contact { padding: 4rem 1.5rem; grid-template-columns: 1fr; gap: 3rem; }
     .contact-top { flex-direction: column; margin-bottom: 3.5rem; }
@@ -1239,16 +1381,26 @@
   <button class="lightbox-close-btn" id="lightbox-close" aria-label="Close project modal">
     <span>✕</span><span>Close</span>
   </button>
+  <div class="lightbox-nav">
+    <button class="lightbox-nav-btn" id="lightbox-prev" aria-label="Previous project">←</button>
+    <button class="lightbox-nav-btn" id="lightbox-next" aria-label="Next project">→</button>
+  </div>
+  <div class="lightbox-counter" id="lightbox-counter">1 / 5</div>
   <div class="lightbox-container">
-    <div class="lightbox-media"></div>
+    <div class="lightbox-media" id="lightbox-media">
+      <div class="lightbox-gallery single" id="lightbox-gallery"></div>
+    </div>
     <div class="lightbox-content">
-      <span class="lightbox-num" id="lb-num">01 — Type</span>
-      <h3 class="lightbox-title" id="lb-title">Project Title</h3>
-      <p class="lightbox-desc" id="lb-desc">Detailed project description will dynamically render here inside your viewport panel area.</p>
-      <div class="lightbox-tags-wrapper">
-        <p class="lightbox-tags-label">Technologies</p>
-        <div class="lightbox-tags" id="lb-tags"></div>
+      <div class="lightbox-content-inner">
+        <span class="lightbox-num" id="lb-num">01 — Type</span>
+        <h3 class="lightbox-title" id="lb-title">Project Title</h3>
+        <p class="lightbox-desc" id="lb-desc">Detailed project description will dynamically render here inside your viewport panel area.</p>
+        <div class="lightbox-tags-wrapper">
+          <p class="lightbox-tags-label">Technologies</p>
+          <div class="lightbox-tags" id="lb-tags"></div>
+        </div>
       </div>
+      <div class="lightbox-actions" id="lightbox-actions"></div>
     </div>
   </div>
 </div>
@@ -1288,12 +1440,13 @@
     <a href="https://github.com/ItsXyzzy" target="_blank" class="contact-link">GitHub</a>
     <a href="https://twitter.com/craig_dowdall" target="_blank" class="contact-link">Twitter</a>
     <a href="https://cdow.bsky.social" target="_blank" class="contact-link">Bluesky</a>
+    <a href="https://myanimelist.net/profile/6666Laz" target="_blank" class="contact-link">MAL</a>
   </div>
 </section>
 
 <footer>
   <span>© 2026 Craig Dowdall</span>
-  <span>Built by hand & love in Dublin, Ireland ♡</span>
+  <span>Built by hand — Ireland</span>
 </footer>
 
 <script>
@@ -1303,42 +1456,50 @@
       title: 'PAM AI',
       desc: 'A personal AI assistant dashboard with a spatial interface. Built around a clean, data-dense layout with live integrations — real-time data, modular panels, and a design system built entirely from scratch. One of my most complete full-stack projects to date.',
       tags: ['HTML / CSS', 'JavaScript', 'AI Integration', 'Dashboard'],
-      link: '#',
-      github: '#'
+      images: ['Image 1', 'Image 2'],
+      live: 'https://example.com',
+      github: 'https://github.com/ItsXyzzy'
     },
     pawswick: {
       num: '02 — Astro / Web',
       title: 'Pawswick Rescue',
       desc: 'A fictional cat rescue charity site built in Astro. Component-driven architecture, warm editorial aesthetic, and a content-first layout that actually makes you want to adopt a cat. Built as a speculative project to explore Astro\'s component model.',
       tags: ['Astro', 'CSS', 'Design', 'Charity'],
-      link: '#',
-      github: '#'
+      images: ['Image 1'],
+      live: 'https://example.com',
+      github: 'https://github.com/ItsXyzzy'
     },
     kinetic: {
       num: '03 — Print / Design',
       title: 'Kinetic Print Works',
       desc: 'A speculative brand identity and site for a fictional print studio. Bold typographic system, expressive layout, and a colour system that feels tactile. Designed to feel like it could actually exist on a high street — every detail treated as if a real client signed off on it.',
       tags: ['HTML / CSS', 'Branding', 'Typography', 'Speculative'],
-      link: 'https://itsxyzzy.github.io/Kinetic-Demo/',
-      github: 'https://github.com/ItsXyzzy/Kinetic-Demo'
+      images: ['Image 1', 'Image 2', 'Image 3'],
+      live: 'https://example.com',
+      github: 'https://github.com/ItsXyzzy'
     },
     photo: {
       num: '04 — Astro / Photography',
       title: 'Photography Portfolio',
       desc: 'A personal photography showcase built independently in Astro. Full-bleed image layouts, lightbox interactions, and a clean gallery flow that keeps the photos front and centre. Shot on Canon 5D mk.II and Fuji X100VI.',
       tags: ['Astro', 'Photography', 'Gallery', 'Lightbox'],
-      link: '#',
-      github: '#'
+      images: ['Image 1', 'Image 2', 'Image 3', 'Image 4'],
+      live: 'https://example.com',
+      github: 'https://github.com/ItsXyzzy'
     },
     lzrs: {
       num: '05 — App / Weather',
       title: 'LZRS Weather',
       desc: 'A minimal weather app deployed on GitHub Pages using the OpenMeteo API. Clean data display, location-aware, fast. An Android version is in the works — same logic, native UI, proper offline caching.',
       tags: ['JavaScript', 'OpenMeteo API', 'GitHub Pages', 'Android (WIP)'],
-      link: '#',
-      github: '#'
+      images: ['Image 1'],
+      live: 'https://example.com',
+      github: 'https://github.com/ItsXyzzy'
     }
   };
+
+  const projectOrder = ['pam', 'pawswick', 'kinetic', 'photo', 'lzrs'];
+  let currentProjectIndex = 0;
 
   // ---- NAV LOGO SCROLL REVEAL ----
   const heroSection = document.querySelector('.hero');
@@ -1413,20 +1574,45 @@
   // ---- LIGHTBOX ----
   const lightbox = document.getElementById('project-lightbox');
   const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+  const lightboxCounter = document.getElementById('lightbox-counter');
   const lbNum = document.getElementById('lb-num');
   const lbTitle = document.getElementById('lb-title');
   const lbDesc = document.getElementById('lb-desc');
   const lbTags = document.getElementById('lb-tags');
+  const lightboxGallery = document.getElementById('lightbox-gallery');
+  const lightboxActions = document.getElementById('lightbox-actions');
 
-  function openLightbox(projectId) {
+  function populateLightbox(projectId) {
     const p = projectData[projectId];
     if (!p) return;
+    currentProjectIndex = projectOrder.indexOf(projectId);
 
     lbNum.textContent = p.num;
     lbTitle.textContent = p.title;
     lbDesc.textContent = p.desc;
     lbTags.innerHTML = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    
+    // Update counter
+    lightboxCounter.textContent = `${currentProjectIndex + 1} / ${projectOrder.length}`;
 
+    // Handle images - masonry grid if multiple, single if one
+    const imageCount = p.images.length;
+    lightboxGallery.className = imageCount === 1 ? 'lightbox-gallery single' : 'lightbox-gallery';
+    lightboxGallery.innerHTML = p.images.map((img, idx) => 
+      `<div class="gallery-item" data-index="${idx}">${img}</div>`
+    ).join('');
+
+    // Add action buttons
+    lightboxActions.innerHTML = `
+      <a href="${p.live}" target="_blank" class="lightbox-action-btn primary">View Live ↗</a>
+      <a href="${p.github}" target="_blank" class="lightbox-action-btn">GitHub Repo ↗</a>
+    `;
+  }
+
+  function openLightbox(projectId) {
+    populateLightbox(projectId);
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -1434,6 +1620,12 @@
   function closeLightbox() {
     lightbox.classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  function navigateLightbox(direction) {
+    currentProjectIndex = (currentProjectIndex + direction + projectOrder.length) % projectOrder.length;
+    const nextId = projectOrder[currentProjectIndex];
+    populateLightbox(nextId);
   }
 
   document.querySelectorAll('.project-card').forEach(card => {
@@ -1445,6 +1637,8 @@
   });
 
   lightboxClose.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+  lightboxNext.addEventListener('click', () => navigateLightbox(1));
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
@@ -1452,6 +1646,8 @@
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
   // ---- SCROLL REVEAL ----
